@@ -11,6 +11,8 @@ public class CoinScript : MonoBehaviour
     private void Start()
     {
         scoreManager = FindObjectOfType<ScoreManager>().GetComponent<ScoreManager>();
+
+        GetComponent<MeshRenderer>().material.color = Color.yellow;
     }
 
     private void OnTriggerEnter(Collider other)
