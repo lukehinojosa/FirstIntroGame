@@ -16,4 +16,10 @@ public class MainMenuUI : MonoBehaviour
         //close the game. it only works on standalone builds, such as ios, android, desktop...
         Application.Quit();
     }
+
+    public void MainMenu()
+    {
+        //Go back to Main Menu
+        SceneManager.LoadScene("MainMenu");
+    }
 }
