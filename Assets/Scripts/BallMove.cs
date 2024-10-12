@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class BallMove : MonoBehaviour
 {
-    public float moveSpeed = 1f;
-    public float jumpSpeed = 1f;
-
+    public float moveAcc = 1f;
+    public float jumpAcc = 1f;
+    public float maxSpeed = 1f;
+    
     public Rigidbody rb;
 
     public bool grounded;
@@ -34,7 +35,8 @@ public class BallMove : MonoBehaviour
 
             if (grounded && Input.GetKeyDown(KeyCode.W))
             {
-                rb.AddForce(Vector2.up * (jumpSpeed * Time.deltaTime));
+                rb.AddForce(Vector2.up * jumpAcc / rb.mass);
+                
                 grounded = false;
             }
         }
@@ -43,13 +45,13 @@ public class BallMove : MonoBehaviour
             grounded = false;
         }
 
-        if (Input.GetKey(KeyCode.A))
+        if (rb.velocity.x > -maxSpeed && Input.GetKey(KeyCode.A))
         {
-            rb.AddForce(Vector2.left * (moveSpeed * Time.deltaTime));
+            rb.AddForce(Vector2.left * (moveAcc * Time.deltaTime / rb.mass));
         }
-        else if (Input.GetKey(KeyCode.D))
+        else if (rb.velocity.x < maxSpeed && Input.GetKey(KeyCode.D))
         {
-            rb.AddForce(Vector2.right * (moveSpeed * Time.deltaTime));
+            rb.AddForce(Vector2.right * (moveAcc * Time.deltaTime / rb.mass));
         }
     }
 }
