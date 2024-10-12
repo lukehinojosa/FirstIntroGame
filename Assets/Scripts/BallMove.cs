@@ -4,32 +4,37 @@ using UnityEngine;
 
 public class BallMove : MonoBehaviour
 {
-    public float speed = 1f;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float moveSpeed = 1f;
+    public float jumpSpeed = 1f;
 
-    // Update is called once per frame
+    public Rigidbody rb;
+    
     void Update()
     {
-        if (Input.GetKey(KeyCode.W))
+        RaycastHit rightHit;
+        RaycastHit leftHit;
+        if (Physics.Raycast(transform.TransformPoint(Vector3.right / 2), Vector3.down, out rightHit, Mathf.Infinity))
         {
-            transform.position += new Vector3(0, speed * Time.deltaTime, 0);
+            Debug.DrawLine(transform.TransformPoint(Vector3.right / 2), rightHit.point, Color.red);
         }
-        else if (Input.GetKey(KeyCode.S))
+        
+        if (Physics.Raycast(transform.TransformPoint(Vector3.left / 2), Vector3.down, out leftHit, Mathf.Infinity))
         {
-            transform.position += new Vector3(0, -speed * Time.deltaTime, 0);
+            Debug.DrawLine(transform.TransformPoint(Vector3.left / 2), leftHit.point, Color.red);
+        }
+        
+        if (rb.velocity.y < 0 && Input.GetKeyDown(KeyCode.W) && Physics.Raycast(transform.position, Vector3.down, out rightHit, Mathf.Infinity) && Physics.Raycast(transform.TransformPoint(Vector3.left / 2), Vector3.down, out leftHit, Mathf.Infinity))
+        {
+            rb.AddForce(Vector2.up * (jumpSpeed * Time.deltaTime));
         }
 
         if (Input.GetKey(KeyCode.A))
         {
-            transform.position += new Vector3(-speed * Time.deltaTime, 0, 0);
+            rb.AddForce(Vector2.left * (moveSpeed *  Time.deltaTime));
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            transform.position += new Vector3(speed * Time.deltaTime, 0, 0);
+            rb.AddForce(Vector2.right * (moveSpeed *  Time.deltaTime));
         }
     }
 }
