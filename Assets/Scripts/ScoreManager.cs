@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,7 +13,6 @@ public class ScoreManager : MonoBehaviour
     public void Increment()
     {
         currentScore++;
-        scoreText.text = currentScore.ToString();
+        scoreText.text = "Score: " + currentScore;
     }
-
 }
