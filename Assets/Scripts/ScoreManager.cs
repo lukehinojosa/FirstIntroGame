@@ -9,7 +9,22 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     private int currentScore = 0;
 
-    // Start is called before the first frame update
+    private int scoreGoal = 0;
+
+    public TextMeshProUGUI victoryMessage;
+
+    private void Start()
+    {
+        scoreGoal = FindObjectsOfType<CoinScript>().Length;
+        Debug.Log(scoreGoal);
+    }
+
+    private void Update()
+    {
+        if (currentScore == scoreGoal)
+            victoryMessage.gameObject.SetActive(true);
+    }
+    
     public void Increment()
     {
         currentScore++;
