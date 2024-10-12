@@ -12,6 +12,10 @@ public class BallMove : MonoBehaviour
 
     public bool grounded;
     
+    public AudioSource audioSource;
+    public AudioClip jumpClip;
+    private float jumpVolume = 0.5f;
+    
     void Update()
     {
         RaycastHit rightHit;
@@ -38,6 +42,8 @@ public class BallMove : MonoBehaviour
                 rb.AddForce(Vector2.up * jumpAcc / rb.mass);
                 
                 grounded = false;
+
+                audioSource.PlayOneShot(jumpClip, jumpVolume);
             }
         }
         else

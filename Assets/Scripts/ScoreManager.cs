@@ -13,6 +13,10 @@ public class ScoreManager : MonoBehaviour
 
     public TextMeshProUGUI victoryMessage;
 
+    public AudioSource audioSource;
+    public AudioClip collectClip;
+    private float collectVolume = 1f;
+
     private void Start()
     {
         scoreGoal = FindObjectsOfType<CoinScript>().Length;
@@ -29,5 +33,7 @@ public class ScoreManager : MonoBehaviour
     {
         currentScore++;
         scoreText.text = "Score: " + currentScore;
+        
+        audioSource.PlayOneShot(collectClip, collectVolume);
     }
 }
