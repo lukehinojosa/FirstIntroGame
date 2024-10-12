@@ -15,6 +15,13 @@ public class BallMove : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip jumpClip;
     private float jumpVolume = 0.5f;
+
+    private Color startingColor;
+
+    void Start()
+    {
+        startingColor = gameObject.GetComponent<MeshRenderer>().material.color;
+    }
     
     void Update()
     {
@@ -33,6 +40,8 @@ public class BallMove : MonoBehaviour
         if (rb.velocity.y <= 0 && Physics.Raycast(transform.position, Vector3.down, out rightHit, transform.TransformPoint(Vector3.right / 2).y - transform.TransformPoint(Vector3.down / 2).y) && Physics.Raycast(transform.TransformPoint(Vector3.left / 2), Vector3.down, out leftHit, transform.TransformPoint(Vector3.left / 2).y - transform.TransformPoint(Vector3.down / 2).y))
         {
             grounded = true;
+
+            GetComponent<MeshRenderer>().material.color = startingColor;
             
             if (!grounded)
                 transform.position = new Vector3(transform.position.x, rightHit.point.y, transform.position.z);//This fixes the height of the object when falling onto the ground
@@ -49,15 +58,26 @@ public class BallMove : MonoBehaviour
         else
         {
             grounded = false;
+            GetComponent<MeshRenderer>().material.color = Color.blue;
         }
 
-        if (rb.velocity.x > -maxSpeed && Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
-            rb.AddForce(Vector2.left * (moveAcc * Time.deltaTime / rb.mass));
+            GetComponent<MeshRenderer>().material.color = Color.red;
+            if (!grounded)
+                GetComponent<MeshRenderer>().material.color = Color.magenta;
+            
+            if (rb.velocity.x > -maxSpeed)
+                rb.AddForce(Vector2.left * (moveAcc * Time.deltaTime / rb.mass));
         }
-        else if (rb.velocity.x < maxSpeed && Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D))
         {
-            rb.AddForce(Vector2.right * (moveAcc * Time.deltaTime / rb.mass));
+            GetComponent<MeshRenderer>().material.color = Color.red;
+            if (!grounded)
+                GetComponent<MeshRenderer>().material.color = Color.magenta;
+            
+            if (rb.velocity.x < maxSpeed)
+                rb.AddForce(Vector2.right * (moveAcc * Time.deltaTime / rb.mass));
         }
     }
 }

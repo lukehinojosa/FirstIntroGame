@@ -20,7 +20,6 @@ public class ScoreManager : MonoBehaviour
     private void Start()
     {
         scoreGoal = FindObjectsOfType<CoinScript>().Length;
-        Debug.Log(scoreGoal);
     }
 
     private void Update()
